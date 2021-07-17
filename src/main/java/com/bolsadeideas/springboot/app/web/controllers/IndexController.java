@@ -1,6 +1,7 @@
 package com.bolsadeideas.springboot.app.web.controllers;
 
-import com.bolsadeideas.springboot.app.web.Usuario;
+import com.bolsadeideas.springboot.app.web.models.Usuario;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,13 +16,22 @@ import java.util.List;
 @RequestMapping("/app")
 public class IndexController {
 
+    @Value("${texto.indexcontroller.index.titulo}")
+    private String textoIndex;
+
+    @Value("${texto.indexcontroller.perfil.titulo}")
+    private String textoPerfil;
+
+    @Value("${texto.indexcontroller.listar.titulo}")
+    private String textoListar;
+
     // Cada controlador necesita un handler para representarlos en una vista
 
 
 
     @GetMapping({ "/index", "/a", "",  "/home"})
     public String  index(Model model){
-        model.addAttribute("titulo", "Hola Spring Framework 5!");
+        model.addAttribute("titulo", textoIndex);
         return "index";
     }
 
@@ -35,7 +45,7 @@ public class IndexController {
         usuario.setEmail("Test1@test.com");
 
         model.addAttribute( "usuario", usuario );
-        model.addAttribute("titulo", "Perfil del usuario: ".concat(usuario.getNombre()));
+        model.addAttribute("titulo", textoPerfil.concat(usuario.getNombre()));
 
 
         return "perfil";
@@ -45,7 +55,7 @@ public class IndexController {
     public String listar (Model model){
 
 
-        model.addAttribute("titulo", "Listado de usuarios");
+        model.addAttribute("titulo", textoListar);
 
 
         return "listar";
